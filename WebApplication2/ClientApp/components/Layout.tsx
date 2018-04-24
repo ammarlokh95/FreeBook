@@ -12,6 +12,12 @@ interface IDefaultProps {
 
 export const DefaultLayout: React.SFC<IDefaultProps> = (props) => {
     const { component: Component, NavMenuType, ...rest } = props;
+    try {
+            (window as any).localStorage.setItem("lastFetch", 0);
+    }
+    catch (err) {
+        console.log("localStorage not found");
+    }
     return <Route {...rest} render={matchProps => (
         <div className='container-fluid'>
             <div className='row' >

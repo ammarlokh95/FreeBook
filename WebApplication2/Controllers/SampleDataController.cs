@@ -96,6 +96,32 @@ namespace WebApplication1.Controllers
             response.ReasonPhrase = JsonConvert.SerializeObject(loginReply);
             return response;
         }
+        [HttpPost("api/addFriend/")]
+        public HttpResponseMessage AddAsFriend([FromQuery] string username, [FromQuery] string friend_username)
+        {
+            var response = new HttpResponseMessage();
+            var debug = new Debugger();
+            var da = new DataAccess();
+
+            if (!Validator.UsernameValidator(username) || !Validator.UsernameValidator(friend_username))
+            {
+                response.StatusCode = HttpStatusCode.BadRequest;
+                response.ReasonPhrase = "Username's are not valid";
+                return response;
+            }
+            try
+            {
+                da.AddFriend(username, friend_username);
+                response.StatusCode = HttpStatusCode.OK;
+                return response;
+            }
+            catch (UserNameDoesNotExistException e)
+            {
+                response.ReasonPhrase = e.Message;
+                response.StatusCode = HttpStatusCode.BadRequest;
+                return response;
+            }
+        }
         class UserAndStatus
         {
             public User user { get; set; }
@@ -149,17 +175,33 @@ namespace WebApplication1.Controllers
         {
             
         }
+        //[HttpGet("action")]
+        //[Route("api/status/getallstatus")]
+        //public string GetAllStatus()
+        //{
+        //    da = new DataAccess();
+        //    var status = new Status();
+        //    debug = new Debugger();
+
+        //    var statuses = da.GetAllStatus();
+        //    var jsonResult = JsonConvert.SerializeObject(statuses);
+        //   // debug.Log(jsonResult);
+        //    return jsonResult;
+        //}
+
         [HttpGet("action")]
-        [Route("api/status/getallstatus")]
-        public string GetAllStatus()
+        [Route("api/status/getallstatus/")]
+        public string GetAllStatus([FromQuery] long last_fetch)
         {
             da = new DataAccess();
             var status = new Status();
             debug = new Debugger();
-
-            var statuses = da.GetAllStatus();
+            DateTime date = new DateTime(1970, 1, 1);
+            date = date.AddMilliseconds(last_fetch);
+            debug.Log(date.ToString());
+            var statuses = da.GetAllStatusSince(date);
             var jsonResult = JsonConvert.SerializeObject(statuses);
-           // debug.Log(jsonResult);
+            debug.Log(jsonResult);
             return jsonResult;
         }
 
@@ -175,6 +217,7 @@ namespace WebApplication1.Controllers
             status.username = data["username"];
             status.message = data["message"];
             status.postDate = DateTime.Now;
+            debug.Log(status.postDate.ToString());
             da.PostStatus(status);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }

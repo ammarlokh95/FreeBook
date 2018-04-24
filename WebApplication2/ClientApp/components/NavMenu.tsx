@@ -72,6 +72,7 @@ export class NavMenu extends React.Component<any, {}> {
                 </div>
             </div>;
         }
+        return null
     }
 }
 

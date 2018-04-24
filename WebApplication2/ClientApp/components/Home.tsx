@@ -36,7 +36,7 @@ class Home extends React.Component<any, any> {
 
         return (
             <div className="HomePage" >
-                {loggedIn && <StatusArea username={user.username} />}
+                <StatusArea username={user.username} />
                 <ScrollableContent status={this.props.status} />
             </div>
         );

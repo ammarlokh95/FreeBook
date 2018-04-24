@@ -11,8 +11,18 @@ export class ScrollableContent extends React.Component<any, any> {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.state = {
-            result: []
+            result: [],
         };
+        try {
+            var lastFetch = (window as any).localStorage.getItem("lastFetch");
+            if (!lastFetch) 
+            {
+                (window as any).localStorage.setItem("lastFetch", 0);
+            }
+        }
+        catch(err) {
+            console.log("localStorage not found");
+        }
         this.componentDidMount = this.componentDidMount.bind(this);
         this.fetchAllStatuses = this.fetchAllStatuses.bind(this);
     }
@@ -26,8 +36,18 @@ export class ScrollableContent extends React.Component<any, any> {
 
     fetchAllStatuses(): any {
         var tempRes: any[] = [];
-
-        fetch('api/status/getallstatus', { method: "GET" })
+        var lastFetch;
+        try {
+            lastFetch = (window as any).localStorage.getItem("lastFetch");
+            if (lastFetch)
+                lastFetch = JSON.parse(lastFetch)
+            else lastFetch = 0;
+        }
+        catch(err){
+            lastFetch = 0;
+        }
+        console.log(lastFetch);
+        fetch('api/status/getallstatus/?last_fetch=' + lastFetch, { method: "GET" })
             .then((response) => {
                 // console.log("Received Response" + response);
                 return response.json();
@@ -37,11 +57,19 @@ export class ScrollableContent extends React.Component<any, any> {
                 // console.log(myJson);
                 var i = 0;
                 tempRes = myJson.map((res: any) => {
+                    console.log(res);
                     var date = new Date(Date.parse(res.postDate));
                     var mydate = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes();
                     return <StatusMessage username={res.username} message={res.message} postDate={mydate} />
                 });
-                this.setState({ result: tempRes });
+                try {
+                    (window as any).localStorage.setItem("lastFetch", Date.now());
+                }
+                catch (err) {
+                    console.log("localStorage not found");
+                }
+                tempRes.push(this.state.result)
+                this.setState({ result: tempRes});
             })
             .catch((err) => {
                 return;

@@ -27,17 +27,20 @@
     <None Remove="ClientApp\components\Login.tsx" />
     <None Remove="ClientApp\components\PrivateRoute.ts" />
     <None Remove="ClientApp\components\ProfilePage.tsx" />
-    <None Remove="ClientApp\components\Profile\ProfileBody.tsx" />
+    <None Remove="ClientApp\components\Profile\AboutArea.tsx" />
+    <None Remove="ClientApp\components\Profile\ContentArea.tsx" />
     <None Remove="ClientApp\components\Registeration.tsx" />
     <None Remove="ClientApp\components\StatusMessage.tsx" />
     <None Remove="ClientApp\store\Counter.ts" />
     <None Remove="ClientApp\store\User.ts" />
     <None Remove="ClientApp\store\WeatherForecasts.ts" />
     <None Remove="ClientApp\_actions\alert.actions.tsx" />
+    <None Remove="ClientApp\_actions\friend.actions.tsx" />
     <None Remove="ClientApp\_actions\index.tsx" />
     <None Remove="ClientApp\_actions\status.actions.tsx" />
     <None Remove="ClientApp\_actions\user.actions.tsx" />
     <None Remove="ClientApp\_constants\alert.constants.ts" />
+    <None Remove="ClientApp\_constants\friend.constants.tsx" />
     <None Remove="ClientApp\_constants\index.tsx" />
     <None Remove="ClientApp\_constants\status.constants.ts" />
     <None Remove="ClientApp\_constants\user.constants.ts" />
@@ -53,6 +56,7 @@
     <None Remove="ClientApp\_reducers\state.reducer.tsx" />
     <None Remove="ClientApp\_reducers\status.reducer.tsx" />
     <None Remove="ClientApp\_reducers\users.reducer.tsx" />
+    <None Remove="ClientApp\_services\friend.service.tsx" />
     <None Remove="ClientApp\_services\index.tsx" />
     <None Remove="ClientApp\_services\user.service.tsx" />
   </ItemGroup>
@@ -61,11 +65,14 @@
     <TypeScriptCompile Include="ClientApp\components\Home\StatusMessage.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PrivateRoute.ts" />
     <TypeScriptCompile Include="ClientApp\components\ProfilePage.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Profile\ProfileBody.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Profile\AboutArea.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Profile\ContentArea.tsx" />
     <TypeScriptCompile Include="ClientApp\_actions\alert.actions.tsx" />
+    <TypeScriptCompile Include="ClientApp\_actions\friend.actions.tsx" />
     <TypeScriptCompile Include="ClientApp\_actions\index.tsx" />
     <TypeScriptCompile Include="ClientApp\_actions\status.actions.tsx" />
     <TypeScriptCompile Include="ClientApp\_actions\user.actions.tsx" />
+    <TypeScriptCompile Include="ClientApp\_constants\friend.constants.tsx" />
     <TypeScriptCompile Include="ClientApp\_constants\status.constants.ts" />
     <TypeScriptCompile Include="ClientApp\_constants\alert.constants.ts" />
     <TypeScriptCompile Include="ClientApp\_constants\index.tsx" />
@@ -81,6 +88,7 @@
     <TypeScriptCompile Include="ClientApp\_reducers\registration.reducer.tsx" />
     <TypeScriptCompile Include="ClientApp\_reducers\status.reducer.tsx" />
     <TypeScriptCompile Include="ClientApp\_reducers\users.reducer.tsx" />
+    <TypeScriptCompile Include="ClientApp\_services\friend.service.tsx" />
     <TypeScriptCompile Include="ClientApp\_services\index.tsx" />
     <TypeScriptCompile Include="ClientApp\_services\user.service.tsx" />
   </ItemGroup>

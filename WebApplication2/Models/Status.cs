@@ -11,7 +11,7 @@ namespace WebApplication2.Models
         public string username { get; set; }
         //[BsonElement("statusID")]
         //public int statusID { get; set; }
-        [BsonElement("postDate")]
+        [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public DateTime postDate { get; set; }
         [BsonElement("message")]
         public string message { get; set; }

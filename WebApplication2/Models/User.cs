@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -17,5 +18,9 @@ namespace WebApplication2.Models
         public string password { get; set; }
         [BsonElement("joinDate")]
         public DateTime joinDate { get; set; }
+        [BsonElement("friends")]
+        public Dictionary<string,Boolean> friends;
+        [BsonElement("friendRequests")]
+        public List<string> friendRequests;
     }
 }

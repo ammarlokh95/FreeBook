@@ -26,7 +26,12 @@ namespace WebApplication2.Models
             var list = _db.GetCollection<Status>("Status").Find(_ => true).Sort("{ postDate: -1 }").ToList();
             return list;
         }
-
+        public IEnumerable<Status> GetAllStatusSince(DateTime date)
+        {
+            var filter = Builders<Status>.Filter.Gt("postDate", date);
+            var list = _db.GetCollection<Status>("Status").Find(filter).Sort("{ postDate: -1 }").ToList();
+            return list;
+        }
         public void PostStatus(Status s)
         {
             var col = _db.GetCollection<Status>("Status");
@@ -79,6 +84,31 @@ namespace WebApplication2.Models
                 list = col.Find<Status>(filters).Sort("{ postDate: -1 }").ToList();
             else list = null;
             return list;
+        }
+
+        public void AddFriend(string username, string fusername)
+        {
+            var builder = Builders<User>.Filter;
+            var filter1 = builder.Eq("username", username);
+            var filter2 = builder.Eq("username", fusername);
+            var col = _db.GetCollection<User>("User");
+            try
+            {
+                var user1 = col.Find<User>(filter1).Single<User>();
+                if(!user1.friends.ContainsKey(fusername))
+                    user1.friends.Add(fusername, false);
+                else { return ; }
+                var user2 = col.Find<User>(filter2).Single<User>();
+                if (!user2.friendRequests.Contains(username))
+                    user2.friendRequests.Add(username);
+                else { return ; }
+                col.UpdateOne(filter1, Builders<User>.Update.Set("friends", user1.friends).CurrentDate("lastModified"));
+                col.UpdateOne(filter2, Builders<User>.Update.Set("friendRequests", user2.friendRequests).CurrentDate("lastModified"));
+            }
+            catch(UserNameDoesNotExistException e)
+            {
+                throw e;
+            }
         }
     }
 }

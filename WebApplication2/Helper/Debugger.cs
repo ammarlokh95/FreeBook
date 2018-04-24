@@ -15,9 +15,9 @@ namespace WebApplication2.Helper
 
         public void Log(string s)
         {
-            using (debugFile = new StreamWriter("Debug.txt"))
+            using (debugFile = new StreamWriter("Debug.txt", true))
             {
-                debugFile.Write(s);
+                debugFile.WriteLine(s);
             }
         }
     }
