@@ -8,39 +8,36 @@ import { connect } from 'react-redux';
 class Home extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
-        this.state = {
-            username: '',
-            firstname: ''
-        }
     }
 
     render() {
         const auth = this.props.authentication;
-        var user;
+        var user = auth.user;
 
-        var { loggedIn } = this.props.authentication;
-        var { loggedOut } = this.props.authentication;
         try {
             user = (window as any).localStorage.getItem('user');
             if (user) {
-                loggedIn = true;
                 user = JSON.parse(user)
+                return (
+                    <div className="HomePage" >
+                        <StatusArea username={user.username} />
+                        <ScrollableContent status={this.props.status} />
+                    </div>
+                );
             }
             else {
+                console.log("bkjb")
                 return <Redirect to="/login" />
             }
         }
         catch (err) {
-            console.log("localstorage not found?");
-        }
+            console.log(user);
 
-        return (
-            <div className="HomePage" >
-                <StatusArea username={user.username} />
-                <ScrollableContent status={this.props.status} />
-            </div>
-        );
-      
+        }
+        <div className="HomePage" >
+            <StatusArea username={user.username} />
+            <ScrollableContent status={this.props.status} />
+        </div>
     }
 }
 function mapStateToProps(state: any, ownProps: any) {

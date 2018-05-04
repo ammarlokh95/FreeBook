@@ -16,7 +16,7 @@ export class NavMenu extends React.Component<any, {}> {
                                 <span className='icon-bar'></span>
                                 <span className='icon-bar'></span>
                             </button>
-                            <Link className='navbar-brand' to={ '/' }>iPipeBook</Link>
+                            <Link className='navbar-brand' to={ '/' }>FreeBook</Link>
                         </div>
                         <div className='clearfix'></div>
                         <div className='navbar-collapse collapse'>

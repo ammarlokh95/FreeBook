@@ -8,7 +8,7 @@ export class LoginNav extends React.Component<any, {}> {
                     textAlign: 'center',
                     width: '100%',
                 }}>
-                    <Link className='navbar-brand'  to={ '/' }>Welcome to iPipeBook</Link>
+                    <Link className='navbar-brand'  to={ '/' }>Welcome to FreeBook</Link>
                 </div>
             </div>
         </div>;

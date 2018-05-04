@@ -133,7 +133,7 @@ namespace WebApplication1.Controllers
             }
         }
         [HttpGet("api/user/")]
-        public HttpResponseMessage UserPage([FromQuery] string username)
+        public HttpResponseMessage PersonalPage([FromQuery] string username)
         {
             
             var response = new HttpResponseMessage();
@@ -159,6 +159,38 @@ namespace WebApplication1.Controllers
                 return response;
             }
             var statuses = da.GetAllStatusOfUser(username);
+            response.StatusCode = HttpStatusCode.OK;
+            var output = new UserAndStatus(userInfo, statuses);
+            response.ReasonPhrase = JsonConvert.SerializeObject(output);
+            return response;
+        }
+        [HttpGet("api/userAndFriend/")]
+        public HttpResponseMessage UserPage([FromQuery] string logged_username, [FromQuery] string page_username)
+        {
+
+            var response = new HttpResponseMessage();
+            var userInfo = new User();
+            var debug = new Debugger();
+            var da = new DataAccess();
+
+            if (!Validator.UsernameValidator(logged_username) || !Validator.UsernameValidator(page_username))
+            {
+                response.StatusCode = HttpStatusCode.BadRequest;
+                response.ReasonPhrase = "Bad username format";
+                return response;
+            }
+
+            try
+            {
+                userInfo = da.GetUserByUsername(page_username);
+            }
+            catch (UserNameDoesNotExistException e)
+            {
+                response.ReasonPhrase = e.Message;
+                response.StatusCode = HttpStatusCode.BadRequest;
+                return response;
+            }
+            var statuses = da.GetAllStatusOfUser(page_username);
             response.StatusCode = HttpStatusCode.OK;
             var output = new UserAndStatus(userInfo, statuses);
             response.ReasonPhrase = JsonConvert.SerializeObject(output);

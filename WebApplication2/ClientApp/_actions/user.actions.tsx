@@ -9,7 +9,8 @@ export const userActions = {
     login,
     logout,
     register,
-    getUserInfo
+    getUserInfo,
+    getUserInfoAndFriendStat
    // //getAll,
     //delete: _delete
 };
@@ -127,6 +128,33 @@ function getUserInfo(username:string) {
     function request() { return { type: userConstants.GET_REQUEST } }
     function success(users:any) { return { type: userConstants.GET_SUCCESS, users } }
     function failure(error:any) { return { type: userConstants.GET_FAILURE, error } }
+}
+
+function getUserInfoAndFriendStat(username: string, logged_username:string) {
+    return (dispatch: any) => {
+        dispatch(request());
+        const requestOptions = {
+            method: 'GET',
+            headers: authHeader()
+        };
+
+        fetch('api/userAndFriend/?logged_username=' + logged_username + '&page_username=' + username, requestOptions)
+            .then((response) => {
+                return response.json();
+            })
+            .then(
+            (data: any) => {
+                if (data.statusCode == 200) {
+                    dispatch(success(JSON.parse(data.reasonPhrase)));
+                }
+                else dispatch(failure(data));
+            })
+            .catch((error) => dispatch(failure(error)));
+    };
+
+    function request() { return { type: userConstants.GET_REQUEST } }
+    function success(users: any) { return { type: userConstants.GET_SUCCESS, users } }
+    function failure(error: any) { return { type: userConstants.GET_FAILURE, error } }
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript

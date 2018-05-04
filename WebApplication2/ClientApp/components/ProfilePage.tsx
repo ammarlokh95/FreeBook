@@ -20,30 +20,37 @@ class ProfilePage extends React.Component<any, any> {
             result: [],
             friendStatus:''
         }
-
+        try {
+            user = (window as any).localStorage.getItem('user');
+            if (user) {
+                user = JSON.parse(user)
+            }
+            else {
+                this.setState({});
+                return;
+            }
+        }
+        catch (err) {
+        }
         var username = parse(this.props.location.search).username;
         if (username) {
             console.log(username)
-            this.props.dispatch(userActions.getUserInfo(username));
+            if (username == user.username) {
+                this.props.dispatch(userActions.getUserInfo(username));
+            }
+            else {
+                this.props.dispatch(userActions.getUserInfoAndFriendStat(username, user.username));
+            }
         }
         else {
-            try {
-                user = (window as any).localStorage.getItem('user');
-                if (user) {
-                    user = JSON.parse(user)
-                    this.props.dispatch(userActions.getUserInfo(user.username));
-                }
-
-            }
-            catch (err) {
-            }
+            
         }
                 
 
         this.formatDate = this.formatDate.bind(this);
         this.addUserAsFriend = this.addUserAsFriend.bind(this);
     }
-
+    
     componentWillReceiveProps(nextProps: any) {
         try {
             const { items } = nextProps.users;
@@ -76,7 +83,6 @@ class ProfilePage extends React.Component<any, any> {
         this.props.dispatch(friendActions.sendFriendRequest(un, fun));
     }
     render() {
-        var loggedIn = true;
         var myProfile = false;
         var user;
         try {
@@ -87,22 +93,20 @@ class ProfilePage extends React.Component<any, any> {
                     myProfile = true;
             }
             else {
-                loggedIn = false;
+                return <Redirect to="/login" />
             }
 
         }
         catch (err) {
 
         }
-        if (loggedIn==true) {
-            return (
-                <Paper zDepth={4} style={{ height: 'auto', width: '-webkit-fill-available', backgroundColor: '#75aaff', alignSelf: 'center', marginTop: '2%' }} >
-                    <AboutArea firstname={this.state.usersProfile.firstname} lastname={this.state.usersProfile.lastname} joinDate={this.state.usersProfile.joinDate} isMyProfile={myProfile} friendStatus={this.state.friendStatus} />
-                    <ContentArea result={this.state.result} />
-                </Paper>
-            );
-        }
-        else return <Redirect to="/login" />
+        return (
+            <Paper zDepth={4} style={{ height: 'auto', width: '-webkit-fill-available', backgroundColor: '#75aaff', alignSelf: 'center', marginTop: '2%' }} >
+                <AboutArea firstname={this.state.usersProfile.firstname} lastname={this.state.usersProfile.lastname} joinDate={this.state.usersProfile.joinDate} isMyProfile={myProfile} friendStatus={this.state.friendStatus} addUserAsFriend={this.addUserAsFriend} />
+                <ContentArea result={this.state.result} />
+            </Paper>
+        );
+        
     }
 }
 function mapStateToProps(state: any, ownProps: any) {
