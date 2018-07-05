@@ -12,6 +12,7 @@ class LoginBody extends React.Component<any, any>
         super(props);
 
         // reset login status
+
         const dispatch = this.props.dispatch;
         dispatch(userActions.logout());
         dispatch(alertActions.clear());

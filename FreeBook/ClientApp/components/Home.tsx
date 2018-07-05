@@ -13,10 +13,13 @@ class Home extends React.Component<any, any> {
     render() {
         const auth = this.props.authentication;
         var user = auth.user;
+        console.log("now here")
 
         try {
             user = (window as any).localStorage.getItem('user');
-            if (user) {
+            if (user != undefined) {
+
+                console.log("now here")
                 user = JSON.parse(user)
                 return (
                     <div className="HomePage" >
