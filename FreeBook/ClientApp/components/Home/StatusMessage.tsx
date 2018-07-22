@@ -12,6 +12,8 @@ export class StatusMessage extends React.Component<any, any> {
         this.setState({ Login: t });
     }
     render() {
+        console.log("statusMes here")
+
         return (
             <Card style={{
                 width: '95%', marginLeft: '2.5%'

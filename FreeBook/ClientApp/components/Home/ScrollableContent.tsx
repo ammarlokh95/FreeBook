@@ -9,6 +9,8 @@ import { Paper } from 'material-ui';
 export class ScrollableContent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
+        console.log("scroll here")
+
         this.onChange = this.onChange.bind(this);
         this.state = {
             result: [],

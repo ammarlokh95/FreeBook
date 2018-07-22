@@ -15,6 +15,7 @@ class ProfilePage extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         var user;
+        console.log("prop here")
         this.state = {
             usersProfile: {},
             result: [],

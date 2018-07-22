@@ -34,6 +34,7 @@ class StatusArea extends React.Component<any, any> {
     }
 
     render() {
+        console.log("status area here")
 
         return (
             <Paper zDepth={5} style={{

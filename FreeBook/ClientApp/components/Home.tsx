@@ -8,12 +8,13 @@ import { connect } from 'react-redux';
 class Home extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
+        console.log("home here")
+
     }
 
     render() {
         const auth = this.props.authentication;
         var user = auth.user;
-        console.log("now here")
 
         try {
             user = (window as any).localStorage.getItem('user');
@@ -34,7 +35,7 @@ class Home extends React.Component<any, any> {
             }
         }
         catch (err) {
-            console.log(user);
+            console.log("here is error");
 
         }
         <div className="HomePage" >

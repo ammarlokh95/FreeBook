@@ -2,6 +2,8 @@ import * as React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 export class LoginNav extends React.Component<any, {}> {
     public render() {
+        console.log("login nav here")
+
         return <div className='main-nav'>
                 <div className='navbar navbar-inverse'>
                 <div className='navbar-header' style={{

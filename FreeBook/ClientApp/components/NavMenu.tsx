@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 export class NavMenu extends React.Component<any, {}> {
     public render() {
-        console.log("here")
+        console.log("nav men here")
 
         var user;
         try {
