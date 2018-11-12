@@ -25,7 +25,7 @@ function login(username:string, password:string) {
             body: JSON.stringify({ username, password })
         };
 
-        fetch('api/login/user', requestOptions)
+        fetch('api/user/login', requestOptions)
             .then((response) => {
                 return response.json();
             })
@@ -35,7 +35,7 @@ function login(username:string, password:string) {
                 if (user.statusCode == 200) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     try {
-                        (window as any).localStorage.setItem('user', user.reasonPhrase);
+                        (window as any).SessionStorage.setItem('user', user.reasonPhrase);
                     }
                     catch (err) {
 
@@ -74,7 +74,7 @@ function register(user: any) {
             body: JSON.stringify(user)
         };
 
-        fetch('api/user/register', requestOptions)
+        fetch('api/user/register/', requestOptions)
             .then((response) => {
                 // return json if it was returned in the response
                 return response.json();
@@ -111,7 +111,7 @@ function getUserInfo(username:string) {
             headers: authHeader()
         };
 
-        fetch('api/user/?username=' + username, requestOptions)
+        fetch('api/user?username=' + username, requestOptions)
             .then((response) => {
                 return response.json();
             })
@@ -138,7 +138,7 @@ function getUserInfoAndFriendStat(username: string, logged_username:string) {
             headers: authHeader()
         };
 
-        fetch('api/userAndFriend/?logged_username=' + logged_username + '&page_username=' + username, requestOptions)
+        fetch('api/userAndFriend?logged_username=' + logged_username + '&page_username=' + username, requestOptions)
             .then((response) => {
                 return response.json();
             })

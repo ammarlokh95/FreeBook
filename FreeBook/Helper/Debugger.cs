@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
-namespace WebApplication2.Helper
+namespace FreeBook.Helper
 {
     public class Debugger
     {

@@ -5,27 +5,32 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using WebApplication2.Models;
-using WebApplication2.AppExceptions;
-using WebApplication2.Validation;
+using FreeBook.Models;
+using FreeBook.AppExceptions;
+using FreeBook.Validation;
 using Microsoft.AspNetCore.Http;
-using WebApplication2.Helper;
+using FreeBook.Helper;
 using System.Net.Http;
 using System.Net;
 using System.Web;
-namespace WebApplication1.Controllers
+namespace FreeBook.Controllers
 {
+    //[Produces("application/json")]
+    //[Route("api/user")]
     public class UserController : Controller
     {
-
-        [HttpPost("api/user/register")]
-        public HttpResponseMessage Register([FromBody]JObject jObject)
+        private readonly IDataAccess _da;
+        public UserController(IDataAccess dataAccess)
+        {
+            _da = dataAccess;
+        }
+        [HttpPost("api/user/register/")]
+        public async Task<HttpResponseMessage> RegisterAsync([FromBody]JObject jObject)
         {
             var info = JsonConvert.DeserializeObject<Dictionary<string, string>>(jObject.ToString());
             var response = new HttpResponseMessage();
             var userInfo = new User();
             var debug = new Debugger();
-            var da = new DataAccess();
 
             if (!Validator.RegistrationValidator(info["firstname"], info["lastname"], info["username"], info["password"]))
             {
@@ -40,7 +45,7 @@ namespace WebApplication1.Controllers
             userInfo.joinDate = DateTime.Now;
             try
             {
-                da.RegisterNewUser(userInfo);
+                await _da.RegisterNewUser(userInfo);
                 response.StatusCode = HttpStatusCode.OK;
                 return response;
             }
@@ -52,26 +57,40 @@ namespace WebApplication1.Controllers
             }
 
         }
-        class LoginReply
+        private class LoginReply
         {
             public string username { get; set; }
             public string firstname { get; set; }
             public string lastname { get; set; }
+            public string token { get; set; }
             public LoginReply(User u)
             {
                 username = u.username;
                 firstname = u.firstname;
                 lastname = u.lastname;
+                token = generateToken();
+            }
+            private string generateToken()
+            {
+                string chars = "abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&";
+                int nums = chars.Length - 1;
+                string token = "";
+                Random rand = new Random(this.username.Length + this.firstname.Length + this.lastname.Length);
+                for(int i = 0; i<16; i++)
+                {
+                    int k = rand.Next(nums);
+                    token += chars[nums];
+                }
+                return token;
             }
         }
-        [HttpPost("api/login/user")]
-        public HttpResponseMessage LoginUser([FromBody]JObject jObject)
+        [HttpPost("api/user/login")]
+        public async Task<HttpResponse> LoginUserAsync([FromBody]JObject jObject)
         {
             var info = JsonConvert.DeserializeObject<Dictionary<string, string>>(jObject.ToString());
-            var response = new HttpResponseMessage();
+            var response = Response;
             var userInfo = new User();
             var debug = new Debugger();
-            var da = new DataAccess();
 
             if (!Validator.LoginValidator(info["username"], info["password"]))
             {
@@ -80,10 +99,10 @@ namespace WebApplication1.Controllers
                 response.ReasonPhrase = "Username or Password format is invalid";
                 return response;
             }
-            
+
             try
             {
-                userInfo = da.LoginUser(info["username"], info["password"]);
+                userInfo = await _da.LoginUser(info["username"], info["password"]);
             }
             catch (UserNameDoesNotExistException e)
             {
@@ -96,12 +115,11 @@ namespace WebApplication1.Controllers
             response.ReasonPhrase = JsonConvert.SerializeObject(loginReply);
             return response;
         }
-        [HttpPost("api/addFriend/")]
-        public HttpResponseMessage AddAsFriend([FromQuery] string username, [FromQuery] string friend_username)
+        [HttpPost("api/user/addFriend")]
+        public async Task<HttpResponseMessage> AddAsFriendAsync([FromQuery] string username, [FromQuery] string friend_username)
         {
             var response = new HttpResponseMessage();
             var debug = new Debugger();
-            var da = new DataAccess();
 
             if (!Validator.UsernameValidator(username) || !Validator.UsernameValidator(friend_username))
             {
@@ -111,7 +129,7 @@ namespace WebApplication1.Controllers
             }
             try
             {
-                da.AddFriend(username, friend_username);
+                await _da.AddFriend(username, friend_username);
                 response.StatusCode = HttpStatusCode.OK;
                 return response;
             }
@@ -122,7 +140,7 @@ namespace WebApplication1.Controllers
                 return response;
             }
         }
-        class UserAndStatus
+        private class UserAndStatus
         {
             public User user { get; set; }
             public IEnumerable<Status> statuses { get; set; }
@@ -132,14 +150,13 @@ namespace WebApplication1.Controllers
                 statuses = s;
             }
         }
-        [HttpGet("api/user/")]
-        public HttpResponseMessage PersonalPage([FromQuery] string username)
+        [HttpGet("api/user/{username}")]
+        public async Task<HttpResponseMessage> PersonalPageAsync([FromQuery] string username)
         {
             
             var response = new HttpResponseMessage();
             var userInfo = new User();
             var debug = new Debugger();
-            var da = new DataAccess();
 
             if (!Validator.UsernameValidator(username))
             {
@@ -150,7 +167,7 @@ namespace WebApplication1.Controllers
 
             try
             {
-                userInfo = da.GetUserByUsername(username);
+                userInfo = await _da.GetUserByUsername(username);
             }
             catch (UserNameDoesNotExistException e)
             {
@@ -158,21 +175,19 @@ namespace WebApplication1.Controllers
                 response.StatusCode = HttpStatusCode.BadRequest;
                 return response;
             }
-            var statuses = da.GetAllStatusOfUser(username);
+            var statuses = await _da.GetAllStatusOfUser(username);
             response.StatusCode = HttpStatusCode.OK;
             var output = new UserAndStatus(userInfo, statuses);
             response.ReasonPhrase = JsonConvert.SerializeObject(output);
             return response;
         }
-        [HttpGet("api/userAndFriend/")]
-        public HttpResponseMessage UserPage([FromQuery] string logged_username, [FromQuery] string page_username)
+        [HttpGet("api/userAndFriend")]
+        public async Task<HttpResponseMessage> UserPageAsync([FromQuery] string logged_username, [FromQuery] string page_username)
         {
 
             var response = new HttpResponseMessage();
             var userInfo = new User();
             var debug = new Debugger();
-            var da = new DataAccess();
-
             if (!Validator.UsernameValidator(logged_username) || !Validator.UsernameValidator(page_username))
             {
                 response.StatusCode = HttpStatusCode.BadRequest;
@@ -182,7 +197,7 @@ namespace WebApplication1.Controllers
 
             try
             {
-                userInfo = da.GetUserByUsername(page_username);
+                userInfo = await _da.GetUserByUsername(page_username);
             }
             catch (UserNameDoesNotExistException e)
             {
@@ -190,7 +205,8 @@ namespace WebApplication1.Controllers
                 response.StatusCode = HttpStatusCode.BadRequest;
                 return response;
             }
-            var statuses = da.GetAllStatusOfUser(page_username);
+
+            var statuses = await _da.GetAllStatusOfUser(page_username);
             response.StatusCode = HttpStatusCode.OK;
             var output = new UserAndStatus(userInfo, statuses);
             response.ReasonPhrase = JsonConvert.SerializeObject(output);
@@ -198,60 +214,5 @@ namespace WebApplication1.Controllers
         }
 
     }
-
-    public class StatusController : Controller
-    {
-        DataAccess da;
-        Debugger debug;
-        public StatusController()
-        {
-            
-        }
-        //[HttpGet("action")]
-        //[Route("api/status/getallstatus")]
-        //public string GetAllStatus()
-        //{
-        //    da = new DataAccess();
-        //    var status = new Status();
-        //    debug = new Debugger();
-
-        //    var statuses = da.GetAllStatus();
-        //    var jsonResult = JsonConvert.SerializeObject(statuses);
-        //   // debug.Log(jsonResult);
-        //    return jsonResult;
-        //}
-
-        [HttpGet("action")]
-        [Route("api/status/getallstatus/")]
-        public string GetAllStatus([FromQuery] long last_fetch)
-        {
-            da = new DataAccess();
-            var status = new Status();
-            debug = new Debugger();
-            DateTime date = new DateTime(1970, 1, 1);
-            date = date.AddMilliseconds(last_fetch);
-            debug.Log(date.ToString());
-            var statuses = da.GetAllStatusSince(date);
-            var jsonResult = JsonConvert.SerializeObject(statuses);
-            debug.Log(jsonResult);
-            return jsonResult;
-        }
-
-        [HttpPost("action")]
-        [Route("api/status/poststatus")]
-        public HttpResponseMessage PostStatus([FromBody] JObject jObject)
-        {
-            da = new DataAccess();
-            debug = new Debugger();
-            var status = new Status();
-            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(jObject.ToString());
-            //debug.Log(jObject.ToString());
-            status.username = data["username"];
-            status.message = data["message"];
-            status.postDate = DateTime.Now;
-            debug.Log(status.postDate.ToString());
-            da.PostStatus(status);
-            return new HttpResponseMessage(HttpStatusCode.OK);
-        }
-    }
+    
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace WebApplication2.AppExceptions
+namespace FreeBook.AppExceptions
 {
     public class UserNameExistsException : Exception
     {

@@ -60,7 +60,7 @@ function getByUsername(username:string) {
         headers: authHeader()
     };
 
-    return fetch('api/user/?username=' + username, requestOptions).then(handleResponse, handleError);
+    return fetch('api/user?username=' + username, requestOptions).then(handleResponse, handleError);
 }
 
 function register(user:any) {

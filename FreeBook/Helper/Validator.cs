@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace WebApplication2.Validation
+namespace FreeBook.Validation
 {
     public class Validator
     {

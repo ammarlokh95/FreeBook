@@ -1,7 +1,7 @@
 ﻿import { authHeader, config } from '../_helpers';
 export const friendService = {
     friendRequest,
-    deleteFriend,
+    removeFriend,
     acceptFriend
 
 };
@@ -12,16 +12,16 @@ function friendRequest(username: string, fusername: string) {
         headers: authHeader()
     }
 
-    return fetch('api/addfriend/?username=' + username + "&friend_username=" + fusername).then(handleResponse, handleError);
+    return fetch('api/addfriend?username=' + username + "&friend_username=" + fusername).then(handleResponse, handleError);
 }
 //TODO
-function deleteFriend(username: string, fusername: string) {
+function removeFriend(username: string, fusername: string) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     }
 
-    return fetch('api/addfriend/?username=' + username + "&friend_username=" + fusername).then(handleResponse, handleError);
+    return fetch('api/removefriend?username=' + username + "&friend_username=" + fusername).then(handleResponse, handleError);
 }
 //TODO
 function acceptFriend(username: string, fusername: string) {
@@ -30,7 +30,7 @@ function acceptFriend(username: string, fusername: string) {
         headers: authHeader()
     }
 
-    return fetch('api/addfriend/?username=' + username + "&friend_username=" + fusername).then(handleResponse, handleError);
+    return fetch('api/addfriend?username=' + username + "&friend_username=" + fusername).then(handleResponse, handleError);
 }
 
 
