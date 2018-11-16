@@ -17,7 +17,7 @@ class Home extends React.Component<any, any> {
         var user = auth.user;
 
         try {
-            user = (window as any).localStorage.getItem('user');
+            user = (window as any).SessionStorage.getItem('user');
             if (user != undefined) {
 
                 console.log("now here")

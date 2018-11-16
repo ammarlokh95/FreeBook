@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+<div id="react-app" asp-prerender-module="ClientApp/dist/main-server">Loading...</div>
+
+@section scripts {
+    <script src="~/dist/login-entry.js" asp-append-version="true"></script>
+}

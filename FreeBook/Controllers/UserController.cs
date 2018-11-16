@@ -13,6 +13,8 @@ using FreeBook.Helper;
 using System.Net.Http;
 using System.Net;
 using System.Web;
+using System.IO;
+
 namespace FreeBook.Controllers
 {
     //[Produces("application/json")]
@@ -24,6 +26,13 @@ namespace FreeBook.Controllers
         {
             _da = dataAccess;
         }
+
+        [HttpGet("Login/")]
+        public IActionResult LoginPage()
+        {
+            return View("Login");
+        }
+
         [HttpPost("api/user/register/")]
         public async Task<HttpResponseMessage> RegisterAsync([FromBody]JObject jObject)
         {
@@ -85,16 +94,15 @@ namespace FreeBook.Controllers
             }
         }
         [HttpPost("api/user/login")]
-        public async Task<HttpResponse> LoginUserAsync([FromBody]JObject jObject)
+        public async Task<HttpResponseMessage> LoginUserAsync([FromBody]JObject jObject)
         {
             var info = JsonConvert.DeserializeObject<Dictionary<string, string>>(jObject.ToString());
-            var response = Response;
             var userInfo = new User();
             var debug = new Debugger();
-
+            var response = new HttpResponseMessage();
             if (!Validator.LoginValidator(info["username"], info["password"]))
             {
-                response.StatusCode = HttpStatusCode.BadRequest;
+                response.StatusCode = HttpStatusCode.BadRequest;                
                 debug.Log(jObject.ToString());
                 response.ReasonPhrase = "Username or Password format is invalid";
                 return response;
@@ -112,7 +120,7 @@ namespace FreeBook.Controllers
             }
             response.StatusCode = HttpStatusCode.OK;
             var loginReply = new LoginReply(userInfo);
-            response.ReasonPhrase = JsonConvert.SerializeObject(loginReply);
+            response.Content = new StringContent(JsonConvert.SerializeObject(loginReply));
             return response;
         }
         [HttpPost("api/user/addFriend")]
@@ -178,7 +186,7 @@ namespace FreeBook.Controllers
             var statuses = await _da.GetAllStatusOfUser(username);
             response.StatusCode = HttpStatusCode.OK;
             var output = new UserAndStatus(userInfo, statuses);
-            response.ReasonPhrase = JsonConvert.SerializeObject(output);
+            response.Content = new StringContent(JsonConvert.SerializeObject(output));
             return response;
         }
         [HttpGet("api/userAndFriend")]
@@ -209,7 +217,7 @@ namespace FreeBook.Controllers
             var statuses = await _da.GetAllStatusOfUser(page_username);
             response.StatusCode = HttpStatusCode.OK;
             var output = new UserAndStatus(userInfo, statuses);
-            response.ReasonPhrase = JsonConvert.SerializeObject(output);
+            response.Content = new StringContent(JsonConvert.SerializeObject(output));
             return response;
         }
 

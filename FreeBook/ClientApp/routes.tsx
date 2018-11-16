@@ -18,6 +18,4 @@ import { Component } from 'react';
 export const routes = <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)} >
     <DefaultLayout exact path='/' component={Home} NavMenuType={NavMenu} />
     <DefaultLayout path="/profile" component={ProfilePage} NavMenuType={NavMenu} />
-    <DefaultLayout exact path="/login" component={LoginBody} NavMenuType={LoginNav} />
-    <DefaultLayout path="/register" component={RegisterBody} NavMenuType={LoginNav} />
 </MuiThemeProvider>;

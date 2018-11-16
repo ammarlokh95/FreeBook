@@ -22,7 +22,7 @@ class LoginBody extends React.Component<any, any>
         const { alert } = this.props;
         const { authentication } = this.props;
         if (alert.type == 'alert-success' && authentication.loggedIn)
-            return <Redirect to="/" />;
+            return <Redirect to="/home" />;
         return (
             <div style={{ textAlign: 'center' }}>
                 {alert.message &&

@@ -3,6 +3,7 @@ import { RouteComponentProps, Redirect } from 'react-router';
 import { RegisterForm } from './Register/RegisterForm';
 import { alertActions } from '../_actions';
 import { connect } from 'react-redux';
+import { LoginBody } from 'ClientApp/components/LoginBody';
 
 class RegisterBody extends React.Component<any, any>
 {
@@ -16,7 +17,7 @@ class RegisterBody extends React.Component<any, any>
     public render(): any {
         const { alert } = this.props;
         if (alert.type == 'alert-success')
-            return <Redirect to="/login" />;
+            return <LoginBody />;
         return (
             <div style={{ textAlign: 'center' }}>
                 {alert.message &&

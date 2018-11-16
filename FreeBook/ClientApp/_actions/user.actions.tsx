@@ -35,7 +35,7 @@ function login(username:string, password:string) {
                 if (user.statusCode == 200) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     try {
-                        (window as any).SessionStorage.setItem('user', user.reasonPhrase);
+                        (window as any).LocalStorage.setItem('user', user.reasonPhrase);
                     }
                     catch (err) {
 
