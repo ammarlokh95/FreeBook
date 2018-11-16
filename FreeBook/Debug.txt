@@ -139,3 +139,26 @@
 []
 1/1/1970 12:00:00 AM
 [{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]
+{ "friends" : null, "friendRequests" : null, "_id" : ObjectId("000000000000000000000000"), "firstname" : "Ammar", "lastname" : "Lokh", "username" : "ammar123", "password" : "asdf", "joinDate" : ISODate("2018-11-16T02:32:16.897Z") }
+{ "friends" : null, "friendRequests" : null, "_id" : ObjectId("000000000000000000000000"), "firstname" : "Ammar", "lastname" : "Lokh", "username" : "asdfgh", "password" : "asdfgh", "joinDate" : ISODate("2018-11-16T02:39:34.83Z") }
+1/1/1970 12:00:00 AM
+[{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]
+11/15/2018 9:50:13 PM
+11/16/2018 2:50:02 AM
+[]
+1/1/1970 12:00:00 AM
+[{"Id":{"Timestamp":1542336613,"Machine":1728061,"Pid":18844,"Increment":10538703,"CreationTime":"2018-11-16T02:50:13Z"},"username":"asdfgh","postDate":"2018-11-16T02:50:13.244Z","message":"Hello world"},{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]
+1/1/1970 12:00:00 AM
+[{"Id":{"Timestamp":1542336613,"Machine":1728061,"Pid":18844,"Increment":10538703,"CreationTime":"2018-11-16T02:50:13Z"},"username":"asdfgh","postDate":"2018-11-16T02:50:13.244Z","message":"Hello world"},{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]
+1/1/1970 12:00:00 AM
+[{"Id":{"Timestamp":1542336613,"Machine":1728061,"Pid":18844,"Increment":10538703,"CreationTime":"2018-11-16T02:50:13Z"},"username":"asdfgh","postDate":"2018-11-16T02:50:13.244Z","message":"Hello world"},{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]
+1/1/1970 12:00:00 AM
+[{"Id":{"Timestamp":1542336613,"Machine":1728061,"Pid":18844,"Increment":10538703,"CreationTime":"2018-11-16T02:50:13Z"},"username":"asdfgh","postDate":"2018-11-16T02:50:13.244Z","message":"Hello world"},{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]
+1/1/1970 12:00:00 AM
+[{"Id":{"Timestamp":1542336613,"Machine":1728061,"Pid":18844,"Increment":10538703,"CreationTime":"2018-11-16T02:50:13Z"},"username":"asdfgh","postDate":"2018-11-16T02:50:13.244Z","message":"Hello world"},{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]
+1/1/1970 12:00:00 AM
+[{"Id":{"Timestamp":1542336613,"Machine":1728061,"Pid":18844,"Increment":10538703,"CreationTime":"2018-11-16T02:50:13Z"},"username":"asdfgh","postDate":"2018-11-16T02:50:13.244Z","message":"Hello world"},{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]
+1/1/1970 12:00:00 AM
+[{"Id":{"Timestamp":1542336613,"Machine":1728061,"Pid":18844,"Increment":10538703,"CreationTime":"2018-11-16T02:50:13Z"},"username":"asdfgh","postDate":"2018-11-16T02:50:13.244Z","message":"Hello world"},{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]
+1/1/1970 12:00:00 AM
+[{"Id":{"Timestamp":1542336613,"Machine":1728061,"Pid":18844,"Increment":10538703,"CreationTime":"2018-11-16T02:50:13Z"},"username":"asdfgh","postDate":"2018-11-16T02:50:13.244Z","message":"Hello world"},{"Id":{"Timestamp":1541980747,"Machine":10808834,"Pid":18444,"Increment":6333195,"CreationTime":"2018-11-11T23:59:07Z"},"username":"ammar123","postDate":"2018-11-11T23:59:07.848Z","message":"new status"}]

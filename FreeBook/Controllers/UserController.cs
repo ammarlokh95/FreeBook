@@ -62,13 +62,13 @@ namespace FreeBook.Controllers
             public string username { get; set; }
             public string firstname { get; set; }
             public string lastname { get; set; }
-            public string token { get; set; }
+           //public string token { get; set; }
             public LoginReply(User u)
             {
                 username = u.username;
                 firstname = u.firstname;
                 lastname = u.lastname;
-                token = generateToken();
+                //token = generateToken();
             }
             private string generateToken()
             {
@@ -85,10 +85,10 @@ namespace FreeBook.Controllers
             }
         }
         [HttpPost("api/user/login")]
-        public async Task<HttpResponse> LoginUserAsync([FromBody]JObject jObject)
+        public async Task<HttpResponseMessage> LoginUserAsync([FromBody]JObject jObject)
         {
             var info = JsonConvert.DeserializeObject<Dictionary<string, string>>(jObject.ToString());
-            var response = Response;
+            var response = new HttpResponseMessage();
             var userInfo = new User();
             var debug = new Debugger();
 
@@ -150,7 +150,7 @@ namespace FreeBook.Controllers
                 statuses = s;
             }
         }
-        [HttpGet("api/user/{username}")]
+        [HttpGet("api/user/page")]
         public async Task<HttpResponseMessage> PersonalPageAsync([FromQuery] string username)
         {
             

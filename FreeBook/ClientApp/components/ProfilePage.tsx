@@ -37,9 +37,11 @@ class ProfilePage extends React.Component<any, any> {
         if (username) {
             console.log(username)
             if (username == user.username) {
+                console.log("fetchin user info")
                 this.props.dispatch(userActions.getUserInfo(username));
             }
             else {
+                console.log("friend and user")
                 this.props.dispatch(userActions.getUserInfoAndFriendStat(username, user.username));
             }
         }

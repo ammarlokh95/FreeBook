@@ -33,9 +33,11 @@ function login(username:string, password:string) {
                 // login successful if there's a jwt token in the response
                 //if (user && user.token) {
                 if (user.statusCode == 200) {
+                    console.log(user)
+
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     try {
-                        (window as any).SessionStorage.setItem('user', user.reasonPhrase);
+                        (window as any).localStorage.setItem('user', user.reasonPhrase);
                     }
                     catch (err) {
 
@@ -111,12 +113,13 @@ function getUserInfo(username:string) {
             headers: authHeader()
         };
 
-        fetch('api/user?username=' + username, requestOptions)
+        fetch('api/user/page?username=' + username, requestOptions)
             .then((response) => {
                 return response.json();
             })
             .then(
             (data: any) => {
+                console.log(data)
                 if (data.statusCode == 200) {
                     dispatch(success(JSON.parse(data.reasonPhrase)));
                 }

@@ -10,7 +10,6 @@ class LoginBody extends React.Component<any, any>
 {
     constructor(props:any) {
         super(props);
-        console.log("login here")
 
         // reset login status
 

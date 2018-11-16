@@ -18,6 +18,7 @@ class Home extends React.Component<any, any> {
 
         try {
             user = (window as any).localStorage.getItem('user');
+            console.log(user)
             if (user != undefined) {
 
                 console.log("now here")
@@ -30,7 +31,7 @@ class Home extends React.Component<any, any> {
                 );
             }
             else {
-                console.log("bkjb")
+                console.log("redirecting to login")
                 return <Redirect to="/login" />
             }
         }
